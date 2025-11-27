@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="智能成像研究小组 - 研究队伍">
+    <title>研究队伍 - I²Group</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ========== 研究队伍页面特殊样式 ========== */
+        .teams-container {
+            padding: 5rem 0;
+        }
+
+        .team-section {
+            margin-bottom: 4rem;
+        }
+
+        .team-category-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .member-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            text-align: center;
+            padding: 1.5rem 1rem;
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .member-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            border: 4px solid var(--primary);
+            transition: var(--transition);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            overflow: hidden;
+            color: white;
+            font-weight: 700;
+        }
+
+        .member-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .member-card:hover .member-avatar {
+            transform: scale(1.1);
+            border-color: var(--secondary);
+        }
+
+        .member-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .member-position {
+            font-size: 0.95rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-research {
+            font-size: 0.85rem;
+            color: var(--gray);
+            line-height: 1.6;
+            min-height: 3rem;
+        }
+
+        /* ========== 模态框样式 ========== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.show {
+            display: block;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 16px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideDown 0.3s ease-out;
+            position: relative;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 1.5rem;
+        }
+
+        .modal-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: 700;
+            overflow: hidden;
+        }
+
+        .modal-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .modal-info h2 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-position {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-email {
+            color: var(--gray);
+            font-size: 0.9rem;
+            word-break: break-all;
+        }
+
+        .modal-body {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .modal-section-content {
+            color: var(--gray);
+            line-height: 1.8;
+            min-height: 2rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 2rem;
+            top: 2rem;
+            font-size: 2rem;
+            font-weight: 300;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+            border: none;
+            background: none;
+            padding: 0;
+        }
+
+        .modal-close:hover {
+            color: var(--dark);
+            transform: rotate(90deg);
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 768px) {
+            .team-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .member-card {
+                padding: 1rem;
+            }
+
+            .member-avatar {
+                width: 110px;
+                height: 110px;
+            }
+
+            .member-name {
+                font-size: 1rem;
+            }
+
+            .member-position {
+                font-size: 0.85rem;
+            }
+
+            .member-research {
+                font-size: 0.8rem;
+                min-height: 2.5rem;
+            }
+
+            .modal-content {
+                margin: 20% auto;
+                padding: 1.5rem;
+            }
+
+            .modal-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .modal-close {
+                right: 1rem;
+                top: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">I²Group</div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">首页</a></li>
+                <li><a href="teams.html" class="nav-link active">研究队伍</a></li>
+                <li><a href="publications.html" class="nav-link">论文发表</a></li>
+                <li><a href="contact.html" class="nav-link">联系我们</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="section" style="background: linear-gradient(135deg, #f5f7fa, #e9ecef); padding: 3rem 0;">
+        <div class="container">
+            <h1 class="section-title">研究队伍</h1>
+            <p style="text-align: center; color: var(--gray); font-size: 1.1rem;">
+                聚集了一支充满热情和创新精神的研究团队
+            </p>
+        </div>
+    </section>
+
+    <!-- 研究员 -->
+    <section class="section">
+        <div class="container teams-container">
+            <!-- 研究员 -->
+            <div class="team-section">
+                <h2 class="team-category-title">👨‍💼 研究员</h2>
+                <div class="team-grid">
+                    <!-- 李兵 -->
+                    <div class="member-card" onclick="openModal(this)">
+                        <div class="member-avatar">
+                            <img src="images/李兵 研究员.jpg" alt="李兵" onerror="this.parentElement.innerHTML='李'">
+                        </div>
+                        <div class="member-name">李兵</div>
+                        <div class="member-position">研究员</div>
+                        <div class="member-research">待填写</div>
+                        <div style="display:none;" class="member-data">
+                            <div class="data-avatar">images/李兵 研究员.jpg</div>
+                            <div class="data-email">待填写</div>
+                            <div class="data-education">待填写</div>
+                            <div class="data-research">待填写</div>
+                            <div class="data-interests">待填写</div>
+                        </div>
+                    </div>
+
+                    <!-- 王隽 -->
+                    <div class="member-card" onclick="openModal(this)">
+                        <div class="member-avatar">
+                            <img src="images/王隽 副研究员.jpg" alt="王隽" onerror="this.parentElement.innerHTML='王'">
+                        </div>
+                        <div class="member-name">王隽</div>
+                        <div class="member-position">副研究员</div>
+                        <div class="member-research">待填写</div>
+                        <div style="display:none;" class="member-data">
+                            <div class="data-avatar">images/王隽 副研究员.jpg</div>
+                            <div class="data-email">待填写</div>
+                            <div class="data-education">待填写</div>
+                            <div class="data-research">待填写</div>
+                            <div class="data-interests">待填写</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 副教授 -->
+            <div class="team-section">
+                <h2 class="team-category-title">🎓 副教授</h2>
+                <div class="team-grid">
+                    <!-- 韩龙飞 -->
+                    <div class="member-card" onclick="openModal(this)">
+                        <div class="member-avatar">
+                            <img src="images/韩龙飞 副教授.jpg" alt="韩龙飞" onerror="this.parentElement.innerHTML='韩'">
+                        </div>
+                        <div class="member-name">韩龙飞</div>
+                        <div class="member-position">副教授</div>
+                        <div class="member-research">待填写</div>
+                        <div style="display:none;" class="member-data">
+                            <div class="data-avatar">images/韩龙飞 副教授.jpg</div>
+                            <div class="data-email">待填写</div>
+                            <div class="data-education">待填写</div>
+                            <div class="data-research">待填写</div>
+                            <div class="data-interests">待填写</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 博士生 -->
+            <div class="team-section">
+                <h2 class="team-category-title">🔬 博士生</h2>
+                <div class="team-grid">
+                    <!-- 陈泽文 -->
+                    <div class="member-card" onclick="openModal(this)">
+                        <div class="member-avatar">
+                            <img src="images/陈泽文 博士研究生.jpg" alt="陈泽文" onerror="this.parentElement.innerHTML='陈'">
+                        </div>
+                        <div class="member-name">陈泽文</div>
+                        <div class="member-position">博士生</div>
+                        <div class="member-research">待填写</div>
+                        <div style="display:none;" class="member-data">
+                            <div class="data-avatar">images/陈泽文 博士研究生.jpg</div>
+                            <div class="data-email">待填写</div>
+                            <div class="data-education">待填写</div>
+                            <div class="data-research">待填写</div>
+                            <div class="data-interests">待填写</div>
+                        </div>
+                    </div>
+
+                    <!-- 覃海纳 -->
+                    <div class="member-card" onclick="openModal(this)">
+                        <div class="member-avatar">
+                            <img src="images/覃海纳 博士研究生.jpg" alt="覃海纳" onerror="this.parentElement.innerHTML='覃'">
+                        </div>
+                        <div class="member-name">覃海纳</div>
+                        <div class="member-position">博士生</div>
+                        <div class="member-research">待填写</div>
+                        <div style="display:none;" class="member-data">
+                            <div class="data-avatar">images/覃海纳 博士研究生.jpg</div>
+                            <div class="data-email">待填写</div>
+                            <div class="data-education">待填写</div>
+                            <div class="data-research">待填写</div>
+                            <div class="data-interests">待填写</div>
+                        </div>
+                    </div>
+
+                    <!-- 孙鑫雨 -->
+                    <div class="member-card" onclick="openModal(this)">
+                        <div class="member-avatar">
+                            <img src="images/孙鑫雨 博士研究生.jpg" alt="孙鑫雨" onerror="this.parentElement.innerHTML='孙'">
+                        </div>
+                        <div class="member-name">孙鑫雨</div>
+                        <div class="member-position">博士生</div>
+                        <div class="member-research">待填写</div>
+                        <div style="display:none;" class="member-data">
+                            <div class="data-avatar">images/孙鑫雨 博士研究生.jpg</div>
+                            <div class="data-email">待填写</div>
+                            <div class="data-education">待填写</div>
+                            <div class="data-research">待填写</div>
+                            <div class="data-interests">待填写</div>
+                        </div>
+                    </div>
+
+                    <!-- 冯紫钰 -->
+                    <div class="member-card" onclick="openModal(this)">
+                        <div class="member-avatar">
+                            <img src="images/冯紫钰 博士研究生.jpg" alt="冯紫钰" onerror="this.parentElement.innerHTML='冯'">
+                        </div>
+                        <div class="member-name">冯紫钰</div>
+                        <div class="member-position">博士生</div>
+                        <div class="member-research">待填写</div>
+                        <div style="display:none;" class="member-data">
+                            <div class="data-avatar">images/冯紫钰 博士研究生.jpg</div>
+                            <div class="data-email">待填写</div>
+                            <div class="data-education">待填写</div>
+                            <div class="data-research">待填写</div>
+                            <div class="data-interests">待填写</div>
+                        </div>
+                    </div>
+
+                    <!-- 蔡明轩 -->
+                    <div class="member-card" onclick="openModal(this)">
+                        <div class="member-avatar">
+                            <img src="images/蔡明轩 博士研究生.jpg" alt="蔡明轩" onerror="this.parentElement.innerHTML='蔡'">
+                        </div>
+                        <div class="member-name">蔡明轩</div>
+                        <div class="member-position">博士生</div>
+                        <div class="member-research">待填写</div>
+                        <div style="display:none;" class="member-data">
+                            <div class="data-avatar">images/蔡明轩 博士研究生.jpg</div>
+                            <div class="data-email">待填写</div>
+                            <div class="data-education">待填写</div>
+                            <div class="data-research">待填写</div>
+                            <div class="data-interests">待填写</div>
+                        </div>
+                    </div>
+
+                    <!-- 张夏泽 -->
+                    <div class="member-card" onclick="openModal(this)">
+                        <div class="member-avatar">
+                            <img src="images/张夏泽 博士研究生.jpg" alt="张夏泽" onerror="this.parentElement.innerHTML='张'">
+                        </div>
+                        <div class="member-name">张夏泽</div>
+                        <div class="member-position">博士生</div>
+                        <div class="member-research">待填写</div>
+                        <div style="display:none;" class="member-data">
+                            <div class="data-avatar">images/张夏泽 博士研究生.jpg</div>
+                            <div class="data-email">待填写</div>
+                            <div class="data-education">待填写</div>
+                            <div class="data-research">待填写</div>
+                            <div class="data-interests">待填写</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 硕士生 -->
+            <div class="team-section">
+                <h2 class="team-category-title">📚 硕士生</h2>
+                <div class="team-grid">
+                    <!-- 赵治坤 -->
+                    <div class="member-card" onclick="openModal(this)">
+                        <div class="member-avatar">
+                            <img src="images/赵治坤 硕士研究生.png" alt="赵治坤" onerror="this.parentElement.innerHTML='赵'">
+                        </div>
+                        <div class="member-name">赵治坤</div>
+                        <div class="member-position">硕士生</div>
+                        <div class="member-research">待填写</div>
+                        <div style="display:none;" class="member-data">
+                            <div class="data-avatar">images/赵治坤 硕士研究生.png</div>
+                            <div class="data-email">待填写</div>
+                            <div class="data-education">待填写</div>
+                            <div class="data-research">待填写</div>
+                            <div class="data-interests">待填写</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 本科生 -->
+            <div class="team-section">
+                <h2 class="team-category-title">🎯 本科生</h2>
+                <div class="team-grid">
+                    <!-- 郭佳 -->
+                    <div class="member-card" onclick="openModal(this)">
+                        <div class="member-avatar">
+                            <img src="images/郭佳 本科生.jpg" alt="郭佳" onerror="this.parentElement.innerHTML='郭'">
+                        </div>
+                        <div class="member-name">郭佳</div>
+                        <div class="member-position">本科生</div>
+                        <div class="member-research">待填写</div>
+                        <div style="display:none;" class="member-data">
+                            <div class="data-avatar">images/郭佳 本科生.jpg</div>
+                            <div class="data-email">待填写</div>
+                            <div class="data-education">待填写</div>
+                            <div class="data-research">待填写</div>
+                            <div class="data-interests">待填写</div>
+                        </div>
+                    </div>
+
+                    <!-- 何宇航 -->
+                    <div class="member-card" onclick="openModal(this)">
+                        <div class="member-avatar">
+                            <img src="images/何宇航 本科生.jpg" alt="何宇航" onerror="this.parentElement.innerHTML='何'">
+                        </div>
+                        <div class="member-name">何宇航</div>
+                        <div class="member-position">本科生</div>
+                        <div class="member-research">待填写</div>
+                        <div style="display:none;" class="member-data">
+                            <div class="data-avatar">images/何宇航 本科生.jpg</div>
+                            <div class="data-email">待填写</div>
+                            <div class="data-education">待填写</div>
+                            <div class="data-research">待填写</div>
+                            <div class="data-interests">待填写</div>
+                        </div>
+                    </div>
+
+                    <!-- 金子翔 -->
+                    <div class="member-card" onclick="openModal(this)">
+                        <div class="member-avatar">
+                            <img src="images/金子翔 本科生.jpg" alt="金子翔" onerror="this.parentElement.innerHTML='金'">
+                        </div>
+                        <div class="member-name">金子翔</div>
+                        <div class="member-position">本科生</div>
+                        <div class="member-research">待填写</div>
+                        <div style="display:none;" class="member-data">
+                            <div class="data-avatar">images/金子翔 本科生.jpg</div>
+                            <div class="data-email">待填写</div>
+                            <div class="data-education">待填写</div>
+                            <div class="data-research">待填写</div>
+                            <div class="data-interests">待填写</div>
+                        </div>
+                    </div>
+
+                    <!-- 王文 -->
+                    <div class="member-card" onclick="openModal(this)">
+                        <div class="member-avatar">
+                            <img src="images/王文 本科生.jpg" alt="王文" onerror="this.parentElement.innerHTML='王'">
+                        </div>
+                        <div class="member-name">王文</div>
+                        <div class="member-position">本科生</div>
+                        <div class="member-research">待填写</div>
+                        <div style="display:none;" class="member-data">
+                            <div class="data-avatar">images/王文 本科生.jpg</div>
+                            <div class="data-email">待填写</div>
+                            <div class="data-education">待填写</div>
+                            <div class="data-research">待填写</div>
+                            <div class="data-interests">待填写</div>
+                        </div>
+                    </div>
+
+                    <!-- 齐天泓 -->
+                    <div class="member-card" onclick="openModal(this)">
+                        <div class="member-avatar">
+                            <img src="images/齐天泓 本科生.jpg" alt="齐天泓" onerror="this.parentElement.innerHTML='齐'">
+                        </div>
+                        <div class="member-name">齐天泓</div>
+                        <div class="member-position">本科生</div>
+                        <div class="member-research">待填写</div>
+                        <div style="display:none;" class="member-data">
+                            <div class="data-avatar">images/齐天泓 本科生.jpg</div>
+                            <div class="data-email">待填写</div>
+                            <div class="data-education">待填写</div>
+                            <div class="data-research">待填写</div>
+                            <div class="data-interests">待填写</div>
+                        </div>
+                    </div>
+
+                    <!-- 李然 -->
+                    <div class="member-card" onclick="openModal(this)">
+                        <div class="member-avatar">
+                            <img src="images/李然 本科生.jpg" alt="李然" onerror="this.parentElement.innerHTML='李'">
+                        </div>
+                        <div class="member-name">李然</div>
+                        <div class="member-position">本科生</div>
+                        <div class="member-research">待填写</div>
+                        <div style="display:none;" class="member-data">
+                            <div class="data-avatar">images/李然 本科生.jpg</div>
+                            <div class="data-email">待填写</div>
+                            <div class="data-education">待填写</div>
+                            <div class="data-research">待填写</div>
+                            <div class="data-interests">待填写</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 成员详情模态框 -->
+    <div id="memberModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-header">
+                <div class="modal-avatar" id="modalAvatar">📍</div>
+                <div class="modal-info">
+                    <h2 id="modalName">成员名字</h2>
+                    <div class="modal-position" id="modalPosition">职位</div>
+                    <div class="modal-email" id="modalEmail">邮箱</div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <div class="modal-section-title">教育背景</div>
+                    <div class="modal-section-content" id="modalEducation">待填写</div>
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">研究方向</div>
+                    <div class="modal-section-content" id="modalResearch">待填写</div>
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">研究兴趣</div>
+                    <div class="modal-section-content" id="modalInterests">待填写</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 智能成像研究小组 (I²Group). All Rights Reserved.</p>
+            <p class="footer-subtitle">中国科学院自动化研究所多模态人工智能系统全国重点实验室</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // ========== 模态框功能 ==========
+        function openModal(card) {
+            const modal = document.getElementById('memberModal');
+            const name = card.querySelector('.member-name').textContent;
+            const position = card.querySelector('.member-position').textContent;
+            const memberData = card.querySelector('.member-data');
+            
+            // 获取数据
+            const avatarPath = memberData.querySelector('.data-avatar').textContent;
+            const email = memberData.querySelector('.data-email').textContent;
+            const education = memberData.querySelector('.data-education').textContent;
+            const research = memberData.querySelector('.data-research').textContent;
+            const interests = memberData.querySelector('.data-interests').textContent;
+
+            // 设置基本信息
+            document.getElementById('modalName').textContent = name;
+            document.getElementById('modalPosition').textContent = position;
+            document.getElementById('modalEmail').textContent = email;
+            document.getElementById('modalEducation').textContent = education;
+            document.getElementById('modalResearch').textContent = research;
+            document.getElementById('modalInterests').textContent = interests;
+
+            // 设置模态框头像
+            const modalAvatar = document.getElementById('modalAvatar');
+            const img = new Image();
+            img.onload = function() {
+                modalAvatar.innerHTML = `<img src="${avatarPath}" alt="${name}">`;
+            };
+            img.onerror = function() {
+                // 图片加载失败,使用姓氏首字母
+                modalAvatar.innerHTML = name.charAt(0);
+            };
+            img.src = avatarPath;
+
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('memberModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        // 点击模态框外部关闭
+        window.onclick = function(event) {
+            const modal = document.getElementById('memberModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // ESC键关闭模态框
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

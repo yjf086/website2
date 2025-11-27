@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="论文详情 - I²Group">
+    <title>论文详情 - I²Group</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ========== 论文详情页样式 ========== */
+        .detail-hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .detail-container {
+            padding: 4rem 0;
+            background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        .detail-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .detail-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .detail-header {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 3rem;
+            border-bottom: 4px solid var(--primary);
+        }
+
+        .pub-type-badge {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .pub-type-badge.journal {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .pub-type-badge.conference {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+
+        .detail-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        .detail-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .meta-icon {
+            font-size: 1.5rem;
+            min-width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .meta-content {
+            flex: 1;
+        }
+
+        .meta-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 0.3rem;
+        }
+
+        .meta-value {
+            font-size: 1rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .detail-body {
+            padding: 3rem;
+        }
+
+        .section-block {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-content {
+            color: var(--gray);
+            line-height: 2;
+            font-size: 1.05rem;
+        }
+
+        .tags-list {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 0.5rem 1.2rem;
+            background: linear-gradient(135deg, #e9ecef, #f8f9fa);
+            color: var(--dark);
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: 2px solid #dee2e6;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 2px solid;
+        }
+
+        .action-btn.primary {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .action-btn.primary:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .action-btn.secondary {
+            background: white;
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .action-btn.secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .no-abstract {
+            padding: 2rem;
+            background: #fff3cd;
+            border-radius: 12px;
+            color: #856404;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 768px) {
+            .detail-hero {
+                padding: 2rem 0;
+            }
+
+            .detail-container {
+                padding: 2rem 0;
+            }
+
+            .detail-header,
+            .detail-body {
+                padding: 2rem 1.5rem;
+            }
+
+            .detail-title {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.3rem;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">I²Group</div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">首页</a></li>
+                <li><a href="teams.html" class="nav-link">研究队伍</a></li>
+                <li><a href="publications.html" class="nav-link active">论文发表</a></li>
+                <li><a href="contact.html" class="nav-link">联系我们</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 页面头部 -->
+    <section class="detail-hero">
+        <div class="container">
+            <a href="publications.html" class="back-link">
+                ← 返回论文列表
+            </a>
+        </div>
+    </section>
+
+    <!-- 论文详情内容 -->
+    <section class="detail-container">
+        <div class="container detail-content">
+            <div class="detail-card">
+                <!-- 论文头部信息 -->
+                <div class="detail-header">
+                    <span class="pub-type-badge" id="pubType">会议论文</span>
+                    <h1 class="detail-title" id="pubTitle">论文标题加载中...</h1>
+                    
+                    <div class="detail-meta">
+                        <div class="meta-item">
+                            <div class="meta-icon">📚</div>
+                            <div class="meta-content">
+                                <div class="meta-label">发表于</div>
+                                <div class="meta-value" id="pubVenue">-</div>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-icon">👥</div>
+                            <div class="meta-content">
+                                <div class="meta-label">作者</div>
+                                <div class="meta-value" id="pubAuthors">-</div>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-icon">📅</div>
+                            <div class="meta-content">
+                                <div class="meta-label">年份</div>
+                                <div class="meta-value" id="pubYear">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 论文主体内容 -->
+                <div class="detail-body">
+                    <!-- 摘要 -->
+                    <div class="section-block">
+                        <h2 class="section-title">📝 摘要 (Abstract)</h2>
+                        <div class="section-content" id="pubAbstract">
+                            <div class="no-abstract">暂无摘要信息</div>
+                        </div>
+                    </div>
+
+                    <!-- 研究标签 -->
+                    <div class="section-block">
+                        <h2 class="section-title">🏷️ 研究领域</h2>
+                        <div class="tags-list" id="pubTags">
+                            <span class="tag">加载中...</span>
+                        </div>
+                    </div>
+
+                    <!-- 操作按钮 -->
+                    <div class="action-buttons">
+                        <a href="#" class="action-btn primary" id="paperLink" target="_blank">
+                            📄 查看原文
+                        </a>
+                        <a href="publications.html" class="action-btn secondary">
+                            📚 返回列表
+                        </a>
+                        <a href="contact.html" class="action-btn secondary">
+                            ✉️ 联系作者
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 智能成像研究小组 (I²Group). All Rights Reserved.</p>
+            <p class="footer-subtitle">中国科学院自动化研究所多模态人工智能系统全国重点实验室</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // ========== 论文数据库 ==========
+        const publications = {
+            'pub2024-1': {
+                title: 'Reinforcement Learning-based Sequential Optimization for Image Signal Processing',
+                type: 'conference',
+                venue: 'AAAI Conference on Artificial Intelligence',
+                authors: 'X. Sun, Z. Zhao, L. Wei, C. Long, M. Cai, L. Han, J. Wang, B. Li, Y. Guo',
+                year: '2024',
+                abstract: '暂无摘要信息',
+                tags: ['ISP优化', '强化学习', '序列优化', '图像信号处理'],
+                link: '#'
+            },
+            'pub2023-1': {
+                title: 'Ranking-based color constancy with limited training samples',
+                type: 'journal',
+                venue: 'IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)',
+                authors: 'B. Li, H. Qin, W. Xiong, Y. Li, S. Feng, W. Hu, S. Maybank',
+                year: '2023',
+                abstract: '提出基于排序的颜色恒常性方法（RCC），用于图像信号处理器（ISP）的白平衡处理。通过将最优统计方法的选择问题转化为标签排序问题，在模型大小和训练时间仅为 CNN 方法的 1/2000 的情况下，达到可比的性能。该方法有效解决了传统方法在有限训练样本下的性能瓶颈问题。',
+                tags: ['颜色恒常性', '白平衡', 'ISP', '排序学习', '小样本学习'],
+                link: 'https://ieeexplore.ieee.org/abstract/document/10130607'
+            },
+            'pub2023-2': {
+                title: 'Self-Prior Guided Pixel Adversarial Networks for Blind Image Inpainting',
+                type: 'journal',
+                venue: 'IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)',
+                authors: 'J. Wang, C. Yuan, B. Li, Y. Deng, W. Hu, S. Maybank',
+                year: '2023',
+                abstract: '提出自先验引导的图像修复网络（SIN），通过检测语义不连续区域和预测全局语义结构来获取自先验，用于盲图像修复任务。该方法能够在未知损坏区域的情况下，自动检测并修复图像中的缺失部分，在多个基准数据集上取得了优异的性能。',
+                tags: ['图像修复', '对抗网络', '自先验', '盲修复', '语义结构'],
+                link: 'https://ieeexplore.ieee.org/abstract/document/10147235'
+            },
+            'pub2023-3': {
+                title: 'Hierarchical Curriculum Learning for No-reference Image Quality Assessment',
+                type: 'journal',
+                venue: 'International Journal of Computer Vision (IJCV)',
+                authors: 'J. Wang, Z. Chen, C. Yuan, B. Li, W. Ma, W. Hu',
+                year: '2023',
+                abstract: '提出分层课程学习（HCL）框架用于无参考图像质量评估（NR-IQA），通过图像修复作为第一课程学习质量相关知识，然后在多个合成 IQA 数据集上学习人类评分规则。该方法采用渐进式学习策略，从简单到复杂逐步提升模型的质量评估能力。',
+                tags: ['图像质量评估', '课程学习', 'NR-IQA', '分层学习', '无参考评估'],
+                link: 'https://link.springer.com/article/10.1007/s11263-023-01851-5'
+            },
+            'pub2023-4': {
+                title: 'Learning to Exploit the Sequence-Specific Prior Knowledge for Image Processing Pipelines Optimization',
+                type: 'conference',
+                venue: 'IEEE Conference on Computer Vision and Pattern Recognition (CVPR)',
+                authors: 'H. Qin, L. Han, W. Xiong, J. Wang, W. Ma, B. Li, W. Hu',
+                year: '2023',
+                abstract: '提出序列 ISP 超参数预测框架，利用 ISP 模块内的序列关系和参数间的相似性来指导模型序列处理。该方法能够自动学习 ISP 流水线中不同模块之间的依赖关系，从而实现端到端的参数优化。',
+                tags: ['ISP优化', '序列学习', '超参数预测', '流水线优化', '先验知识'],
+                link: 'https://openaccess.thecvf.com/content/CVPR2023/html/Qin_Learning_To_Exploit_the_Sequence-Specific_Prior_Knowledge_for_Image_Processing_CVPR_2023_paper.html'
+            },
+            'pub2023-5': {
+                title: 'SMM: Self-supervised Multi-Illumination Color Constancy Model with Multiple Pretext Tasks',
+                type: 'conference',
+                venue: 'ACM International Conference on Multimedia',
+                authors: 'Z. Feng, Z. Xu, H. Qin, C. Lang, B. Li, W. Xiong',
+                year: '2023',
+                abstract: '提出自监督多光照颜色恒常性模型，利用多个前置任务（局部颜色失真恢复任务和着色任务）来探索光照颜色上下文信息和固有颜色信息。该方法通过多任务学习策略，增强了模型对不同光照条件下的鲁棒性。',
+                tags: ['颜色恒常性', '自监督学习', '多光照', '前置任务', '多任务学习'],
+                link: 'https://dl.acm.org/doi/abs/10.1145/3581783.3612057'
+            },
+            'pub2022-1': {
+                title: 'Attention-aware Learning for Hyperparameters Prediction in Image Processing Pipelines',
+                type: 'conference',
+                venue: 'European Conference on Computer Vision (ECCV)',
+                authors: 'H. Qin, L. Han, J. Wang, B. Li',
+                year: '2022',
+                abstract: '提出注意力感知学习方法，将参数预测网络集成到 ISP 调优中，利用多注意力机制生成输入 RAW 图像和参数空间之间的注意力映射。该方法能够自适应地调整不同 ISP 模块的参数，显著提升了图像处理质量。',
+                tags: ['ISP调优', '注意力机制', '超参数预测', 'RAW图像', '参数优化'],
+                link: 'https://link.springer.com/chapter/10.1007/978-3-031-19800-7_16'
+            },
+            'pub2022-2': {
+                title: 'Teacher-Guided Learning for Blind Image Quality Assessment',
+                type: 'conference',
+                venue: 'Asian Conference on Computer Vision (ACCV)',
+                authors: 'Z. Chen, J. Wang, B. Li, C. Yuan, W. Xiong, R. Cheng, W. Hu',
+                year: '2022',
+                abstract: '提出盲图像质量评估（BIQA）框架，构建图像修复模型作为教师网络来学习语义和失真信息，然后指导学生网络进行 BIQA。该方法通过知识蒸馏技术，将复杂的质量评估知识迁移到轻量级的学生网络中。',
+                tags: ['BIQA', '教师网络', '图像质量评估', '知识蒸馏', '盲评估'],
+                link: 'https://openaccess.thecvf.com/content/ACCV2022/html/Chen_Teacher-Guided_Learning_for_Blind_Image_Quality_Assessment_ACCV_2022_paper.html'
+            }
+        };
+
+        // ========== 加载论文详情 ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            // 获取URL参数
+            const urlParams = new URLSearchParams(window.location.search);
+            const pubId = urlParams.get('id');
+
+            if (pubId && publications[pubId]) {
+                const pub = publications[pubId];
+
+                // 填充论文信息
+                document.getElementById('pubTitle').textContent = pub.title;
+                document.getElementById('pubVenue').textContent = pub.venue;
+                document.getElementById('pubAuthors').textContent = pub.authors;
+                document.getElementById('pubYear').textContent = pub.year;
+
+                // 设置类型标签
+                const typeBadge = document.getElementById('pubType');
+                typeBadge.textContent = pub.type === 'journal' ? '期刊论文' : '会议论文';
+                typeBadge.className = `pub-type-badge ${pub.type}`;
+
+                // 设置摘要
+                const abstractDiv = document.getElementById('pubAbstract');
+                if (pub.abstract && pub.abstract !== '暂无摘要信息') {
+                    abstractDiv.innerHTML = `<p>${pub.abstract}</p>`;
+                } else {
+                    abstractDiv.innerHTML = '<div class="no-abstract">暂无摘要信息</div>';
+                }
+
+                // 设置标签
+                const tagsDiv = document.getElementById('pubTags');
+                tagsDiv.innerHTML = pub.tags.map(tag => 
+                    `<span class="tag">${tag}</span>`
+                ).join('');
+
+                // 设置链接
+                const paperLink = document.getElementById('paperLink');
+                if (pub.link && pub.link !== '#') {
+                    paperLink.href = pub.link;
+                } else {
+                    paperLink.style.display = 'none';
+                }
+
+                // 更新页面标题
+                document.title = `${pub.title} - I²Group`;
+            } else {
+                // 论文未找到
+                document.getElementById('pubTitle').textContent = '论文未找到';
+                document.getElementById('pubAbstract').innerHTML = 
+                    '<div class="no-abstract">抱歉，未找到该论文信息</div>';
+            }
+        });
+    </script>
+</body>
+</html>
