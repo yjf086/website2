@@ -7,310 +7,252 @@
     <title>科研成果 - I²Group</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* ========== 科研成果页面样式 ========== */
-        .publications-hero {
+        /* ========== 页面基础样式 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light-bg: #f8fafc;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ========== 页面标题区 ========== */
+        .page-header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            padding: 4rem 0;
+            padding: 5rem 0 3rem;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
 
-        .publications-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,144C960,149,1056,139,1152,128C1248,117,1344,107,1392,101.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') bottom/cover no-repeat;
-        }
-
-        .publications-hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .publications-hero h1 {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
+        .page-header h1 {
+            font-size: 3rem;
             margin-bottom: 1rem;
             font-weight: 800;
         }
 
-        .publications-hero-subtitle {
-            font-size: clamp(1rem, 2vw, 1.2rem);
+        .page-header p {
+            font-size: 1.2rem;
             opacity: 0.95;
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
         }
 
-        /* ========== 统计卡片 ========== */
-        .stats-section {
-            padding: 3rem 0;
-            background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-
-        .stat-card {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            transition: var(--transition);
-            border-top: 4px solid var(--primary);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-        }
-
-        .stat-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--gray);
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        /* ========== 筛选器 ========== */
-        .filters-section {
-            padding: 2rem 0;
-            background: white;
-            position: sticky;
-            top: 70px;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .filters {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 0.8rem 1.8rem;
-            background: white;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
-            font-size: 0.95rem;
-        }
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        }
-
-        /* ========== 论文列表 ========== */
+        /* ========== 论文列表区域 ========== */
         .publications-section {
-            padding: 3rem 0;
+            padding: 4rem 0;
+            background: var(--light-bg);
         }
 
-        .year-section {
-            margin-bottom: 4rem;
+        .pub-list {
+            display: grid;
+            gap: 3rem;
         }
 
-        .year-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 3px solid var(--primary);
-        }
-
-        .year-badge {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .year-count {
-            color: var(--gray);
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        .publications-list {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
+        /* ========== 论文卡片 ========== */
         .pub-card {
             background: white;
             border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             transition: var(--transition);
-            cursor: pointer;
-            border-left: 5px solid var(--primary);
         }
 
         .pub-card:hover {
-            transform: translateX(8px);
+            transform: translateY(-8px);
             box-shadow: 0 8px 30px rgba(0,0,0,0.12);
         }
 
-        .pub-card.hidden {
-            display: none;
+        /* 有图片的论文卡片 */
+        .pub-card.with-image {
+            display: grid;
+            grid-template-columns: 400px 1fr;
         }
 
-        .pub-type-badge {
+        .pub-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 论文内容区 */
+        .pub-content {
+            padding: 2rem;
+        }
+
+        .pub-badge {
             display: inline-block;
             padding: 0.4rem 1rem;
-            border-radius: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
             margin-bottom: 1rem;
         }
 
-        .pub-type-badge.journal {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-        }
-
-        .pub-type-badge.conference {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: white;
-        }
-
         .pub-title {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--dark);
             margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-
-        .pub-venue {
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 0.8rem;
-            font-size: 1rem;
+            line-height: 1.4;
         }
 
         .pub-authors {
             color: var(--gray);
-            margin-bottom: 1rem;
-            line-height: 1.6;
             font-size: 0.95rem;
+            margin-bottom: 1.5rem;
         }
 
-        .pub-footer {
+        /* 摘要 */
+        .pub-abstract {
+            background: #fff8e1;
+            border-left: 4px solid #ffa726;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .abstract-label {
+            font-weight: 700;
+            color: #e65100;
+            margin-bottom: 0.6rem;
+            font-size: 0.9rem;
+        }
+
+        .abstract-text {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--dark);
+        }
+
+        .abstract-empty {
+            color: var(--gray);
+            font-style: italic;
+        }
+
+        /* 元数据 */
+        .pub-meta {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1.2rem;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .meta-row {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid #e9ecef;
+            gap: 1rem;
+            font-size: 0.9rem;
         }
 
-        .pub-tags {
+        .meta-label {
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 100px;
+        }
+
+        .meta-value {
+            color: var(--dark);
+            flex: 1;
+        }
+
+        .tags {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
         }
 
-        .pub-tag {
+        .tag {
             padding: 0.3rem 0.8rem;
-            background: #f0f0f0;
-            color: var(--gray);
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
             border-radius: 20px;
-            font-size: 0.8rem;
-        }
-
-        .pub-link-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 1.2rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border-radius: 8px;
+            font-size: 0.85rem;
             font-weight: 600;
             transition: var(--transition);
         }
 
-        .pub-link-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        .tag:hover {
+            background: var(--primary);
+            color: white;
         }
 
-        /* ========== 响应式 ========== */
-        @media (max-width: 768px) {
-            .publications-hero {
-                padding: 3rem 0;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .filters {
-                gap: 0.5rem;
-            }
-
-            .filter-btn {
-                padding: 0.6rem 1.2rem;
-                font-size: 0.85rem;
-            }
-
-            .pub-card {
-                padding: 1.5rem;
-            }
-
-            .pub-title {
-                font-size: 1.2rem;
-            }
-
-            .pub-footer {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
+        /* 查看论文按钮 */
+        .pub-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: var(--transition);
         }
 
-        @media (max-width: 480px) {
-            .stats-grid {
+        .pub-link:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        /* ========== 响应式设计 ========== */
+        @media (max-width: 968px) {
+            .pub-card.with-image {
                 grid-template-columns: 1fr;
             }
 
-            .year-header {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .pub-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .page-header {
+                padding: 3rem 0 2rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .pub-content {
+                padding: 1.5rem;
+            }
+
+            .meta-row {
                 flex-direction: column;
-                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .meta-label {
+                min-width: auto;
             }
         }
     </style>
@@ -321,10 +263,10 @@
         <div class="container nav-container">
             <div class="logo">I²Group</div>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" class="nav-link">首页</a></li>
-                <li><a href="teams.html" class="nav-link">研究队伍</a></li>
-                <li><a href="publications.html" class="nav-link active">论文发表</a></li>
-                <li><a href="contact.html" class="nav-link">联系我们</a></li>
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="teams.html" class="nav-link">Team</a></li>
+                <li><a href="publications.html" class="nav-link active">Publications</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
             </ul>
             <button class="nav-toggle" id="navToggle">
                 <span></span>
@@ -335,229 +277,380 @@
     </nav>
 
     <!-- 页面标题 -->
-    <section class="publications-hero">
-        <div class="container publications-hero-content">
+    <header class="page-header">
+        <div class="container">
             <h1>📚 科研成果</h1>
-            <p class="publications-hero-subtitle">
-                智能成像研究小组致力于图像信号处理、图像质量评估、颜色恒常性等前沿领域研究<br>
-                在 TPAMI、CVPR、ECCV 等顶级期刊和会议发表多篇高水平论文
-            </p>
+            <p>智能成像研究小组致力于图像信号处理、图像质量评估、颜色恒常性等前沿领域研究</p>
         </div>
-    </section>
-
-    <!-- 统计信息 -->
-    <section class="stats-section">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">📄</div>
-                    <div class="stat-number">8</div>
-                    <div class="stat-label">总论文数</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">📗</div>
-                    <div class="stat-number">3</div>
-                    <div class="stat-label">期刊论文</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">🎤</div>
-                    <div class="stat-number">5</div>
-                    <div class="stat-label">会议论文</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">⭐</div>
-                    <div class="stat-number">5</div>
-                    <div class="stat-label">顶级会议/期刊</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 筛选器 -->
-    <section class="filters-section">
-        <div class="container">
-            <div class="filters">
-                <button class="filter-btn active" data-filter="all">全部论文</button>
-                <button class="filter-btn" data-filter="journal">期刊论文</button>
-                <button class="filter-btn" data-filter="conference">会议论文</button>
-                <button class="filter-btn" data-filter="2024">2024年</button>
-                <button class="filter-btn" data-filter="2023">2023年</button>
-                <button class="filter-btn" data-filter="2022">2022年</button>
-            </div>
-        </div>
-    </section>
+    </header>
 
     <!-- 论文列表 -->
     <section class="publications-section">
         <div class="container">
-            <!-- 2024年 -->
-            <div class="year-section" data-year="2024">
-                <div class="year-header">
-                    <div class="year-badge">2024</div>
-                    <div class="year-count">共 1 篇论文</div>
-                </div>
-                <div class="publications-list">
-                    <div class="pub-card" data-type="conference" data-id="pub2024-1">
-                        <span class="pub-type-badge conference">会议论文</span>
-                        <h3 class="pub-title">Reinforcement Learning-based Sequential Optimization for Image Signal Processing</h3>
-                        <div class="pub-venue">AAAI Conference on Artificial Intelligence</div>
-                        <div class="pub-authors">X. Sun, Z. Zhao, L. Wei, C. Long, M. Cai, L. Han, J. Wang, B. Li, Y. Guo</div>
-                        <div class="pub-footer">
-                            <div class="pub-tags">
-                                <span class="pub-tag">ISP优化</span>
-                                <span class="pub-tag">强化学习</span>
-                                <span class="pub-tag">序列优化</span>
-                            </div>
-                            <a href="publication-detail.html?id=pub2024-1" class="pub-link-btn">
-                                查看详情 →
-                            </a>
+            <div class="pub-list">
+
+                <!-- 论文1 - 有图片 -->
+                <article class="pub-card with-image">
+                    <img src="images/论文一.jpg" alt="论文配图" class="pub-image">
+                    <div class="pub-content">
+                        <span class="pub-badge">TPAMI</span>
+                        <h2 class="pub-title">Accelerated Self-Supervised Multi-Illumination Color Constancy With Hybrid Knowledge Distillation</h2>
+                        <p class="pub-authors">Ziyu Feng; Bing Li; Congyan Lang; Zheming Xu; Haina Qin; Juan Wang</p>
+                        
+                        <div class="pub-abstract">
+                            <div class="abstract-label">📝 Abstract</div>
+                            <div class="abstract-text abstract-empty">无</div>
                         </div>
+
+                        <div class="pub-meta">
+                            <div class="meta-row">
+                                <span class="meta-label">🏷️ Tags:</span>
+                                <div class="meta-value">
+                                    <div class="tags">
+                                        <span class="tag">Color Constancy</span>
+                                        <span class="tag">Knowledge Distillation</span>
+                                        <span class="tag">Self-Supervised</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-label">📂 Categories:</span>
+                                <span class="meta-value">Computer Vision, Image Processing</span>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-label">🕒 Updated:</span>
+                                <span class="meta-value">January 15, 2024</span>
+                            </div>
+                        </div>
+
+                        <a href="https://ieeexplore.ieee.org/document/11051054" target="_blank" class="pub-link">
+                            查看论文 →
+                        </a>
+                    </div>
+                </article>
+
+                <!-- 论文2 -->
+                <article class="pub-card">
+                    <div class="pub-content">
+                        <span class="pub-badge">TPAMI</span>
+                        <h2 class="pub-title">Ranking-based color constancy with limited training samples</h2>
+                        <p class="pub-authors">Bing Li, Hanlin Qin, Weijia Xiong, Yinqiang Zheng, Shiming Feng, Weicai Hu, Stephen Maybank</p>
+                        
+                        <div class="pub-abstract">
+                            <div class="abstract-label">📝 Abstract</div>
+                            <div class="abstract-text">
+                               Computational color constancy is an important component of Image Signal Processors (ISP) for white balancing in many imaging devices. Recently, deep convolutional neural networks (CNN) have been introduced for color constancy. They achieve prominent performance improvements comparing with those statistics or shallow learning-based methods. However, the need for a large number of training samples, a high computational cost and a huge model size make CNN-based methods unsuitable for deployment on low-resource ISPs for real-time applications. In order to overcome these limitations and to achieve comparable performance to CNN-based methods, an efficient method is defined for selecting the optimal simple statistics-based method (SM) for each image. To this end, we propose a novel ranking-based color constancy method (RCC) that formulates the selection of the optimal SM method as a label ranking problem. RCC designs a specific ranking loss function, and uses a low rank constraint to control the model complexity and a grouped sparse constraint for feature selection. Finally, we apply the RCC model to predict the order of the candidate SM methods for a test image, and then estimate its illumination using the predicted optimal SM method (or fusing the results estimated by the top $k$ SM methods). Comprehensive experiment results show that the proposed RCC outperforms nearly all the shallow learning-based methods and achieves comparable performance to (sometimes even better performance than) deep CNN-based methods with only 1/2000 of the model size and training time. RCC also shows good robustness to limited training samples and good generalization crossing cameras. Furthermore, to remove the dependence on the ground truth illumination, we extend RCC to obtain a novel ranking-based method without ground truth illumination (RCC_NO) that learns the ranking model using simple partial binary preference annotations provided by untrained annotators rather than experts. RCC_NO also achieves better performance than the SM methods and most shallow learning-based methods with low costs of sample collection and illumination measurement. 
+                            </div>
+                        </div>
+
+                        <div class="pub-meta">
+                            <div class="meta-row">
+                                <span class="meta-label">🏷️ Tags:</span>
+                                <div class="meta-value">
+                                    <div class="tags">
+                                        <span class="tag">Color Constancy</span>
+                                        <span class="tag">Ranking-based Learning</span>
+                                        <span class="tag">Limited Samples</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-label">📂 Categories:</span>
+                                <span class="meta-value">Computer Vision</span>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-label">🕒 Updated:</span>
+                                <span class="meta-value">2023</span>
+                            </div>
+                        </div>
+
+                        <a href="https://ieeexplore.ieee.org/abstract/document/9870176" target="_blank" class="pub-link">
+                            查看论文 →
+                        </a>
+                    </div>
+                </article>
+
+                <!-- 论文3 -->
+                <article class="pub-card">
+                    <div class="pub-content">
+                        <span class="pub-badge">TPAMI</span>
+                        <h2 class="pub-title">Self-Prior Guided Pixel Adversarial Networks for Blind Image Inpainting</h2>
+                        <p class="pub-authors">Juan Wang, Chunyu Yuan, Bing Li, Yan Deng, Weicai Hu, Stephen Maybank</p>
+                        
+                        <div class="pub-abstract">
+                            <div class="abstract-label">📝 Abstract</div>
+                            <div class="abstract-text">
+                                Blind image inpainting involves two critical aspects, i.e., “where to inpaint” and “how to inpaint”. Knowing “where to inpaint” can eliminate the interference arising from corrupted pixel values; a good “how to inpaint” strategy yields high-quality inpainted results robust to various corruptions. In existing methods, these two aspects usually lack explicit and separate consideration. This paper fully explores these two aspects and proposes a self-prior guided inpainting network (SIN). The self-priors are obtained by detecting semantic-discontinuous regions and by predicting global semantic structures of the input image. On the one hand, the self-priors are incorporated into the SIN, which enables the SIN to perceive valid context information from uncorrupted regions and to synthesize semantic-aware textures for corrupted regions. On the other hand, the self-priors are reformulated to provide a pixel-wise adversarial feedback and a high-level semantic structure feedback, which can promote the semantic continuity of inpainted images. Experimental results demonstrate that our method achieves state-of-the-art performance in metric scores and in visual quality. It has an advantage over many existing methods that assume “where to inpaint” is known in advance. Extensive experiments on a series of related image restoration tasks validate the effectiveness of our method in obtaining high-quality inpainting. 
+                            </div>
+                        </div>
+
+                        <div class="pub-meta">
+                            <div class="meta-row">
+                                <span class="meta-label">🏷️ Tags:</span>
+                                <div class="meta-value">
+                                    <div class="tags">
+                                        <span class="tag">Image Inpainting</span>
+                                        <span class="tag">GAN</span>
+                                        <span class="tag">Blind Inpainting</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-label">📂 Categories:</span>
+                                <span class="meta-value">Computer Vision</span>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-label">🕒 Updated:</span>
+                                <span class="meta-value">2023</span>
+                            </div>
+                        </div>
+
+                        <a href="https://ieeexplore.ieee.org/abstract/document/10105766" target="_blank" class="pub-link">
+                            查看论文 →
+                        </a>
+                    </div>
+                </article>
+
+                <!-- 论文4 -->
+                <article class="pub-card">
+                    <div class="pub-content">
+                        <span class="pub-badge">IJCV</span>
+                        <h2 class="pub-title">Hierarchical Curriculum Learning for No-reference Image Quality Assessment</h2>
+                        <p class="pub-authors">Juan Wang, Zhong Chen, Chunyu Yuan, Bing Li, Wei Ma, Weicai Hu</p>
+                        
+                        <div class="pub-abstract">
+                            <div class="abstract-label">📝 Abstract</div>
+                            <div class="abstract-text">
+                                Despite remarkable success has been achieved by convolutional neural networks (CNNs) in no-reference image quality assessment (NR-IQA), there still exist many challenges in improving the performance of IQA for authentically distorted images. An important factor is that the insufficient annotated data limits the training of high-capacity CNNs to accommodate diverse distortions, complicated semantic structures and high-variance quality scores of these images. To address this problem, this paper proposes a hierarchical curriculum learning (HCL) framework for NR-IQA. The main idea of the proposed framework is to leverage the external data to learn the prior knowledge about IQA widely and progressively. Specifically, as a closely-related task with NR-IQA, image restoration is used as the first curriculum to learn the image quality related knowledge (i.e., semantic and distortion information) on massive distorted-reference image pairs. Then multiple lightweight subnetworks are designed to learn human scoring rules on multiple available synthetic IQA datasets independently, and a cross-dataset quality assessment correlation (CQAC) module is proposed to fully explore the similarities and diversities of different scoring rules. Finally, the whole model is fine-tuned on the target authentic IQA dataset to fuse the learned knowledge and adapt to the target data distribution. Experimental results show that our model achieves state-of-the-art performance on multiple standard authentic IQA datasets. Moreover, the generalization of our model is fully validated by the cross-dataset evaluation and the gMAD competition. In addition, extensive analyses prove that the proposed HCL framework is effective in improving the performance of our model. 
+                            </div>
+                        </div>
+
+                        <div class="pub-meta">
+                            <div class="meta-row">
+                                <span class="meta-label">🏷️ Tags:</span>
+                                <div class="meta-value">
+                                    <div class="tags">
+                                        <span class="tag">NR-IQA</span>
+                                        <span class="tag">Curriculum Learning</span>
+                                        <span class="tag">Deep Learning</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-label">📂 Categories:</span>
+                                <span class="meta-value">Image Quality Assessment</span>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-label">🕒 Updated:</span>
+                                <span class="meta-value">2023</span>
+                            </div>
+                        </div>
+
+                        <a href="https://link.springer.com/article/10.1007/s11263-023-01926-7" target="_blank" class="pub-link">
+                            查看论文 →
+                        </a>
+                    </div>
+                </article>
+
+                <!-- 论文5 -->
+                <article class="pub-card">
+                    <div class="pub-content">
+                        <span class="pub-badge">CVPR 2023</span>
+                        <h2 class="pub-title">Learning to Exploit the Sequence-Specific Prior Knowledge for Image Processing Pipelines Optimization</h2>
+                        <p class="pub-authors">Hanlin Qin, Luyao Han, Weijia Xiong, Juan Wang, Wei Ma, Bing Li, Weicai Hu</p>
+                        
+                        <div class="pub-abstract">
+                            <div class="abstract-label">📝 Abstract</div>
+                            <div class="abstract-text">The hardware image signal processing (ISP) pipeline is the intermediate layer between the imaging sensor and the downstream application, processing the sensor signal into an RGB image. The ISP is less programmable and consists of a series of processing modules. Each processing module handles a subtask and contains a set of tunable hyperparameters. A large number of hyperparameters form a complex mapping with the ISP output. The industry typically relies on manual and time-consuming hyperparameter tuning by image experts, biased towards human perception. Recently, several automatic ISP hyperparameter optimization methods using downstream evaluation metrics come into sight. However, existing methods for ISP tuning treat the high-dimensional parameter space as a global space for optimization and prediction all at once without inducing the structure knowledge of ISP. To this end, we propose a sequential ISP hyperparameter prediction framework that utilizes the sequential relationship within ISP modules and the similarity among parameters to guide the model sequence process. We validate the proposed method on object detection, image segmentation, and image quality tasks. </div>
+                        </div>
+
+                        <div class="pub-meta">
+                            <div class="meta-row">
+                                <span class="meta-label">🏷️ Tags:</span>
+                                <div class="meta-value">
+                                    <div class="tags">
+                                        <span class="tag">ISP</span>
+                                        <span class="tag">Pipeline Optimization</span>
+                                        <span class="tag">Prior Knowledge</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-label">📂 Categories:</span>
+                                <span class="meta-value">Image Processing</span>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-label">🕒 Updated:</span>
+                                <span class="meta-value">2023</span>
+                            </div>
+                        </div>
+
+                        <a href="https://openaccess.thecvf.com/content/CVPR2023/html/Qin_Learning_To_Exploit_the_Sequence-Specific_Prior_Knowledge_for_Image_Processing_CVPR_2023_paper.html" target="_blank" class="pub-link">
+                            查看论文 →
+                        </a>
+                    </div>
+                </article>
+
+                <!-- 论文6 -->
+                <article class="pub-card">
+                    <div class="pub-content">
+                        <span class="pub-badge">ACM MM 2023</span>
+                        <h2 class="pub-title">SMM: Self-Supervised Multi-Illumination Color Constancy Model with Multiple Pretext Tasks</h2>
+                        <p class="pub-authors">Ziyu Feng, Zheming Xu, Hanlin Qin, Congyan Lang, Bing Li, Weijia Xiong</p>
+                        
+                        <div class="pub-abstract">
+                            <div class="abstract-label">📝 Abstract</div>
+                            <div class="abstract-text">Color constancy is an important ability of the human visual system to perceive constant colors across different illumination. In this paper, we study a more practical yet challenging task, removing color cast by multiple spatial-varying illumination. Previous methods are limited by the scale of the current multi-illumination datasets, which hinders them from learning more discriminative features. Instead, we first propose a self-supervised multi-illumination color constancy model that leverages multiple pretext tasks to fully explore lighting color contextual information and inherent color information without using any manual annotations. During the pre-training phase, we train multiple Transformer-based encoders by learning multiple pretext tasks: (i) the local color distortion recovery task, which is carefully designed to learn lighting color contextual representation, and (ii) the colorization task, which is utilized to acquire inherent knowledge. In the downstream color constancy task, we fine-tune the encoders and design a lightweight decoder to obtain better illumination distributions with fewer parameters. Our lightweight architecture outperforms the state-of-the-art methods on the multi-illuminant benchmark (LSMI) and got robust performance on the single illuminant benchmark (NUS-8). Additionally, extensive ablation studies and visualization results demonstrate the effectiveness of integrating lighting color contextual and inherent color information learning in a self-supervised manner.</div>
+                        </div>
+
+                        <div class="pub-meta">
+                            <div class="meta-row">
+                                <span class="meta-label">🏷️ Tags:</span>
+                                <div class="meta-value">
+                                    <div class="tags">
+                                        <span class="tag">Color Constancy</span>
+                                        <span class="tag">Self-Supervised</span>
+                                        <span class="tag">Multi-Illumination</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-label">📂 Categories:</span>
+                                <span class="meta-value">Computer Vision</span>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-label">🕒 Updated:</span>
+                                <span class="meta-value">2023</span>
+                            </div>
+                        </div>
+
+                        <a href="https://dl.acm.org/doi/abs/10.1145/3581783.3612031" target="_blank" class="pub-link">
+                            查看论文 →
+                        </a>
+                    </div>
+                </article>
+
+                <!-- 论文7 -->
+                <article class="pub-card">
+                    <div class="pub-content">
+                        <span class="pub-badge">ECCV 2022</span>
+                        <h2 class="pub-title">Attention-aware Learning for Hyperparameters Prediction in Image Processing Pipelines</h2>
+                        <p class="pub-authors">Hanlin Qin, Luyao Han, Juan Wang, Bing Li</p>
+                        
+                        <div class="pub-abstract">
+                            <div class="abstract-label">📝 Abstract</div>
+                            <div class="abstract-text ">Between the imaging sensor and the image applications, the hardware image signal processing (ISP) pipelines reconstruct an RGB image from the sensor signal and feed it into downstream tasks. The processing blocks in ISPs depend on a set of tunable hyperparameters that have a complex interaction with the output. Manual setting by image experts is the traditional way of hyperparameter tuning, which is time-consuming and biased towards human perception. Recently, ISP has been optimized by the feedback of the downstream tasks based on different optimization algorithms. Unfortunately, these methods should keep parameters fixed during the inference stage for arbitrary input without considering that each image should have specific parameters based on its feature. To this end, we propose an attention-aware learning method that integrates the parameter prediction network into ISP tuning and utilizes the multi-attention mechanism to generate the attentive mapping between the input RAW image and the parameter space. The proposed method integrates downstream tasks end-to-end, predicting specific parameters for each image. We validate the proposed method on object detection, image segmentation, and human viewing tasks. </div>
+                        </div>
+
+                        <div class="pub-meta">
+                            <div class="meta-row">
+                                <span class="meta-label">🏷️ Tags:</span>
+                                <div class="meta-value">
+                                    <div class="tags">
+                                        <span class="tag">ISP</span>
+                                        <span class="tag">Attention Mechanism</span>
+                                        <span class="tag">Hyperparameter Prediction</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-label">📂 Categories:</span>
+                                <span class="meta-value">Image Processing</span>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-label">🕒 Updated:</span>
+                                <span class="meta-value">2022</span>
+                            </div>
+                        </div>
+
+                        <a href="https://link.springer.com/chapter/10.1007/978-3-031-19797-0_31" target="_blank" class="pub-link">
+                            查看论文 →
+                        </a>
+                    </div>
+                </article>
+
+                <!-- 论文8 -->
+                <!-- 论文 - Teacher-Guided Learning for Blind Image Quality Assessment -->
+<article class="pub-card">
+    <div class="pub-content">
+        <span class="pub-badge">ACCV 2022</span>
+        <h2 class="pub-title">Teacher-Guided Learning for Blind Image Quality Assessment</h2>
+        <p class="pub-authors">Z. Chen, J. Wang, B. Li, C. Yuan, W. Xiong, R. Cheng, W. Hu</p>
+        
+        <div class="pub-abstract">
+            <div class="abstract-label">📝 Abstract</div>
+            <div class="abstract-text">
+                The performance of deep learning models for blind image quality assessment (BIQA) suffers from annotated data insufficiency. However, image restoration, as a closely-related task with BIQA, can easily acquire training data without annotation. Moreover, both image semantic and distortion information are vital knowledge for the two tasks to predict and improve image quality. Inspired by these, this paper proposes a novel BIQA framework, which builds an image restoration model as a teacher network (TN) to learn the two aspects of knowledge and then guides the student network (SN) for BIQA. In TN, multi-branch convolutions are leveraged for performing adaptive restoration from diversely distorted images to strengthen the knowledge learning. Then the knowledge is transferred to the SN and progressively aggregated by computing long-distance responses to improve BIQA on small annotated data. Experimental results show that our method outperforms many state-of-the-arts on both synthetic and authentic datasets. Besides, the generalization, robustness and effectiveness of our method are fully validated.
+            </div>
+        </div>
+
+        <div class="pub-meta">
+            <div class="meta-row">
+                <span class="meta-label">🏷️ Tags:</span>
+                <div class="meta-value">
+                    <div class="tags">
+                        <span class="tag">Image Quality Assessment</span>
+                        <span class="tag">Knowledge Distillation</span>
+                        <span class="tag">Image Restoration</span>
                     </div>
                 </div>
             </div>
+            <div class="meta-row">
+                <span class="meta-label">📂 Categories:</span>
+                <span class="meta-value">Computer Vision, Image Quality Assessment</span>
+            </div>
+            <div class="meta-row">
+                <span class="meta-label">🕒 Updated:</span>
+                <span class="meta-value">2022</span>
+            </div>
+        </div>
 
-            <!-- 2023年 -->
-            <div class="year-section" data-year="2023">
-                <div class="year-header">
-                    <div class="year-badge">2023</div>
-                    <div class="year-count">共 5 篇论文</div>
-                </div>
-                <div class="publications-list">
-                    <!-- 论文1 -->
-                    <div class="pub-card" data-type="journal" data-id="pub2023-1">
-                        <span class="pub-type-badge journal">期刊论文</span>
-                        <h3 class="pub-title">Ranking-based color constancy with limited training samples</h3>
-                        <div class="pub-venue">IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)</div>
-                        <div class="pub-authors">B. Li, H. Qin, W. Xiong, Y. Li, S. Feng, W. Hu, S. Maybank</div>
-                        <div class="pub-footer">
-                            <div class="pub-tags">
-                                <span class="pub-tag">颜色恒常性</span>
-                                <span class="pub-tag">白平衡</span>
-                                <span class="pub-tag">ISP</span>
-                            </div>
-                            <a href="publication-detail.html?id=pub2023-1" class="pub-link-btn">
-                                查看详情 →
-                            </a>
-                        </div>
-                    </div>
+        <a href="https://github.com/chencn2020/TeacherIQA" target="_blank" class="pub-link">
+            查看论文 →
+        </a>
+    </div>
+</article>
 
-                    <!-- 论文2 -->
-                    <div class="pub-card" data-type="journal" data-id="pub2023-2">
-                        <span class="pub-type-badge journal">期刊论文</span>
-                        <h3 class="pub-title">Self-Prior Guided Pixel Adversarial Networks for Blind Image Inpainting</h3>
-                        <div class="pub-venue">IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)</div>
-                        <div class="pub-authors">J. Wang, C. Yuan, B. Li, Y. Deng, W. Hu, S. Maybank</div>
-                        <div class="pub-footer">
-                            <div class="pub-tags">
-                                <span class="pub-tag">图像修复</span>
-                                <span class="pub-tag">对抗网络</span>
-                                <span class="pub-tag">自先验</span>
-                            </div>
-                            <a href="publication-detail.html?id=pub2023-2" class="pub-link-btn">
-                                查看详情 →
-                            </a>
-                        </div>
-                    </div>
+            <!-- 论文 - Reinforcement Learning-based Sequential Optimization for Image Signal Processing -->
+<article class="pub-card">
+    <div class="pub-content">
+        <span class="pub-badge">AAAI 2024</span>
+        <h2 class="pub-title">Reinforcement Learning-based Sequential Optimization for Image Signal Processing</h2>
+        <p class="pub-authors">X. Sun, Z. Zhao, L. Wei, C. Long, M. Cai, L. Han, J. Wang, B. Li, Y. Guo</p>
+        
+        <div class="pub-abstract">
+            <div class="abstract-label">📝 Abstract</div>
+            <div class="abstract-text abstract-empty">无</div>
+        </div>
 
-                    <!-- 论文3 -->
-                    <div class="pub-card" data-type="journal" data-id="pub2023-3">
-                        <span class="pub-type-badge journal">期刊论文</span>
-                        <h3 class="pub-title">Hierarchical Curriculum Learning for No-reference Image Quality Assessment</h3>
-                        <div class="pub-venue">International Journal of Computer Vision (IJCV)</div>
-                        <div class="pub-authors">J. Wang, Z. Chen, C. Yuan, B. Li, W. Ma, W. Hu</div>
-                        <div class="pub-footer">
-                            <div class="pub-tags">
-                                <span class="pub-tag">图像质量评估</span>
-                                <span class="pub-tag">课程学习</span>
-                                <span class="pub-tag">NR-IQA</span>
-                            </div>
-                            <a href="publication-detail.html?id=pub2023-3" class="pub-link-btn">
-                                查看详情 →
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- 论文4 -->
-                    <div class="pub-card" data-type="conference" data-id="pub2023-4">
-                        <span class="pub-type-badge conference">会议论文</span>
-                        <h3 class="pub-title">Learning to Exploit the Sequence-Specific Prior Knowledge for Image Processing Pipelines Optimization</h3>
-                        <div class="pub-venue">IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</div>
-                        <div class="pub-authors">H. Qin, L. Han, W. Xiong, J. Wang, W. Ma, B. Li, W. Hu</div>
-                        <div class="pub-footer">
-                            <div class="pub-tags">
-                                <span class="pub-tag">ISP优化</span>
-                                <span class="pub-tag">序列学习</span>
-                                <span class="pub-tag">超参数预测</span>
-                            </div>
-                            <a href="publication-detail.html?id=pub2023-4" class="pub-link-btn">
-                                查看详情 →
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- 论文5 -->
-                    <div class="pub-card" data-type="conference" data-id="pub2023-5">
-                        <span class="pub-type-badge conference">会议论文</span>
-                        <h3 class="pub-title">SMM: Self-supervised Multi-Illumination Color Constancy Model with Multiple Pretext Tasks</h3>
-                        <div class="pub-venue">ACM International Conference on Multimedia</div>
-                        <div class="pub-authors">Z. Feng, Z. Xu, H. Qin, C. Lang, B. Li, W. Xiong</div>
-                        <div class="pub-footer">
-                            <div class="pub-tags">
-                                <span class="pub-tag">颜色恒常性</span>
-                                <span class="pub-tag">自监督学习</span>
-                                <span class="pub-tag">多光照</span>
-                            </div>
-                            <a href="publication-detail.html?id=pub2023-5" class="pub-link-btn">
-                                查看详情 →
-                            </a>
-                        </div>
+        <div class="pub-meta">
+            <div class="meta-row">
+                <span class="meta-label">🏷️ Tags:</span>
+                <div class="meta-value">
+                    <div class="tags">
+                        <span class="tag">Image Signal Processing</span>
+                        <span class="tag">Reinforcement Learning</span>
+                        <span class="tag">Sequential Optimization</span>
                     </div>
                 </div>
             </div>
+            <div class="meta-row">
+                <span class="meta-label">📂 Categories:</span>
+                <span class="meta-value">Computer Vision, Image Processing</span>
+            </div>
+            <div class="meta-row">
+                <span class="meta-label">🕒 Updated:</span>
+                <span class="meta-value">2024</span>
+            </div>
+        </div>
 
-            <!-- 2022年 -->
-            <div class="year-section" data-year="2022">
-                <div class="year-header">
-                    <div class="year-badge">2022</div>
-                    <div class="year-count">共 2 篇论文</div>
-                </div>
-                <div class="publications-list">
-                    <!-- 论文1 -->
-                    <div class="pub-card" data-type="conference" data-id="pub2022-1">
-                        <span class="pub-type-badge conference">会议论文</span>
-                        <h3 class="pub-title">Attention-aware Learning for Hyperparameters Prediction in Image Processing Pipelines</h3>
-                        <div class="pub-venue">European Conference on Computer Vision (ECCV)</div>
-                        <div class="pub-authors">H. Qin, L. Han, J. Wang, B. Li</div>
-                        <div class="pub-footer">
-                            <div class="pub-tags">
-                                <span class="pub-tag">ISP调优</span>
-                                <span class="pub-tag">注意力机制</span>
-                                <span class="pub-tag">超参数预测</span>
-                            </div>
-                            <a href="publication-detail.html?id=pub2022-1" class="pub-link-btn">
-                                查看详情 →
-                            </a>
-                        </div>
-                    </div>
+        <a href="https://ojs.aaai.org/index.php/AAAI/article/view/28327" target="_blank" class="pub-link">
+            查看论文 →
+        </a>
+    </div>
+</article>
 
-                    <!-- 论文2 -->
-                    <div class="pub-card" data-type="conference" data-id="pub2022-2">
-                        <span class="pub-type-badge conference">会议论文</span>
-                        <h3 class="pub-title">Teacher-Guided Learning for Blind Image Quality Assessment</h3>
-                        <div class="pub-venue">Asian Conference on Computer Vision (ACCV)</div>
-                        <div class="pub-authors">Z. Chen, J. Wang, B. Li, C. Yuan, W. Xiong, R. Cheng, W. Hu</div>
-                        <div class="pub-footer">
-                            <div class="pub-tags">
-                                <span class="pub-tag">BIQA</span>
-                                <span class="pub-tag">教师网络</span>
-                                <span class="pub-tag">图像质量评估</span>
-                            </div>
-                            <a href="publication-detail.html?id=pub2022-2" class="pub-link-btn">
-                                查看详情 →
-                            </a>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </section>
@@ -571,61 +664,5 @@
     </footer>
 
     <script src="js/main.js"></script>
-    <script>
-        // ========== 论文筛选功能 ==========
-        document.addEventListener('DOMContentLoaded', () => {
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const pubCards = document.querySelectorAll('.pub-card');
-            const yearSections = document.querySelectorAll('.year-section');
-
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    // 移除所有active类
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-
-                    const filter = btn.dataset.filter;
-
-                    // 筛选逻辑
-                    if (filter === 'all') {
-                        pubCards.forEach(card => card.classList.remove('hidden'));
-                        yearSections.forEach(section => section.style.display = 'block');
-                    } else if (filter === 'journal' || filter === 'conference') {
-                        yearSections.forEach(section => section.style.display = 'block');
-                        pubCards.forEach(card => {
-                            if (card.dataset.type === filter) {
-                                card.classList.remove('hidden');
-                            } else {
-                                card.classList.add('hidden');
-                            }
-                        });
-                    } else {
-                        // 年份筛选
-                        yearSections.forEach(section => {
-                            if (section.dataset.year === filter) {
-                                section.style.display = 'block';
-                                section.querySelectorAll('.pub-card').forEach(card => {
-                                    card.classList.remove('hidden');
-                                });
-                            } else {
-                                section.style.display = 'none';
-                            }
-                        });
-                    }
-                });
-            });
-
-            // 点击卡片跳转详情
-            pubCards.forEach(card => {
-                card.addEventListener('click', (e) => {
-                    // 如果点击的是链接按钮，不触发卡片点击
-                    if (e.target.closest('.pub-link-btn')) return;
-                    
-                    const pubId = card.dataset.id;
-                    window.location.href = `publication-detail.html?id=${pubId}`;
-                });
-            });
-        });
-    </script>
 </body>
 </html>

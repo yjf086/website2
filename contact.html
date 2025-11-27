@@ -7,7 +7,7 @@
     <title>联系我们 - I²Group</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* ========== 联系我们页面优化样式 ========== */
+        /* ========== 联系我们页面全新样式 ========== */
         .contact-hero {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
@@ -50,322 +50,222 @@
             background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
         }
 
-        /* ========== 主布局 ========== */
-        .contact-main-layout {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 3rem;
-            margin-bottom: 4rem;
-        }
-
-        /* ========== 左侧地图区域 ========== */
-        .map-section {
+        /* ========== Contact Us 板块 ========== */
+        .contact-us-section {
+            max-width: 900px;
+            margin: 0 auto 4rem;
             background: white;
-            border-radius: 20px;
-            overflow: hidden;
+            border-radius: 24px;
+            padding: 3rem;
             box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            border-left: 6px solid var(--primary);
             transition: var(--transition);
         }
 
-        .map-section:hover {
+        .contact-us-section:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 50px rgba(0,0,0,0.12);
         }
 
-        .map-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 2rem;
-            position: relative;
-        }
-
-        .map-header::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            right: 0;
-            height: 10px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 0);
-        }
-
-        .map-header h2 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
+        .section-header {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-        }
-
-        .map-subtitle {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        .map-container {
-            height: 450px;
-            position: relative;
-        }
-
-        .map-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .map-footer {
-            padding: 2rem;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-        }
-
-        .map-address {
-            color: var(--gray);
-            line-height: 2;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-        }
-
-        .map-address strong {
-            color: var(--dark);
-            font-weight: 600;
-        }
-
-        .map-links {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
             gap: 1rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 3px solid #f0f0f0;
         }
 
-        .map-link {
+        .section-icon {
+            width: 60px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-            padding: 1rem;
-            background: white;
-            color: var(--primary);
-            border-radius: 10px;
-            font-weight: 600;
-            transition: var(--transition);
-            border: 2px solid var(--primary);
-        }
-
-        .map-link:hover {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+            border-radius: 16px;
+            font-size: 2rem;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
         }
 
-        /* ========== 右侧联系信息 ========== */
-        .contact-info-section {
-            display: flex;
-            flex-direction: column;
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0;
+        }
+
+        .contact-info-grid {
+            display: grid;
             gap: 2rem;
         }
 
-        .contact-card {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            transition: var(--transition);
-            border-left: 5px solid var(--primary);
-        }
-
-        .contact-card:hover {
-            transform: translateX(8px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-        }
-
-        .contact-card-header {
+        .contact-info-item {
             display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #f0f0f0;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 16px;
+            transition: var(--transition);
         }
 
-        .contact-card-icon {
+        .contact-info-item:hover {
+            background: linear-gradient(135deg, #e9ecef, #dee2e6);
+            transform: translateX(8px);
+        }
+
+        .info-icon {
             width: 50px;
             height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
+            background: white;
+            color: var(--primary);
             border-radius: 12px;
             font-size: 1.5rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
-        .contact-card-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--dark);
+        .info-content {
+            flex: 1;
         }
 
-        .contact-card-content {
+        .info-label {
+            font-size: 0.9rem;
             color: var(--gray);
-            line-height: 2;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .contact-card-content strong {
+        .info-value {
+            font-size: 1.1rem;
             color: var(--dark);
             font-weight: 600;
+            line-height: 1.6;
         }
 
-        .contact-card-content a {
+        .info-value a {
             color: var(--primary);
             text-decoration: none;
-            font-weight: 600;
             transition: var(--transition);
         }
 
-        .contact-card-content a:hover {
+        .info-value a:hover {
             color: var(--secondary);
             text-decoration: underline;
         }
 
-        /* ========== 快速联系网格 ========== */
-        .quick-contact-section {
-            margin-top: 3rem;
+        /* ========== Prospective Students 板块 ========== */
+        .prospective-section {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            border-left: 6px solid var(--secondary);
+            transition: var(--transition);
         }
 
-        .quick-contact-title {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 2.5rem;
-            position: relative;
+        .prospective-section:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
         }
 
-        .quick-contact-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            margin: 1rem auto 0;
-            border-radius: 2px;
-        }
-
-        .quick-contact-grid {
+        .application-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 2rem;
         }
 
-        .quick-btn {
-            background: white;
+        .application-card {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
             border-radius: 20px;
-            padding: 2.5rem 2rem;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 2.5rem;
+            border: 2px solid #e9ecef;
             transition: var(--transition);
-            border: 2px solid transparent;
             position: relative;
             overflow: hidden;
         }
 
-        .quick-btn::before {
+        .application-card::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
-            transform: rotate(45deg);
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            transform: scaleY(0);
             transition: var(--transition);
-            opacity: 0;
         }
 
-        .quick-btn:hover::before {
-            opacity: 1;
-        }
-
-        .quick-btn:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        .application-card:hover {
             border-color: var(--primary);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+            transform: translateX(8px);
         }
 
-        .quick-btn-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
+        .application-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card-number {
+            width: 35px;
+            height: 35px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            border-radius: 50%;
-            font-size: 2.5rem;
-            position: relative;
-            z-index: 1;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .card-content {
+            color: var(--gray);
+            line-height: 2;
+            font-size: 1rem;
+        }
+
+        .card-content strong {
+            color: var(--dark);
+        }
+
+        .email-highlight {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 0.5rem 0;
             transition: var(--transition);
         }
 
-        .quick-btn:hover .quick-btn-icon {
-            transform: scale(1.1) rotate(10deg);
+        .email-highlight:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            transform: translateX(5px);
         }
 
-        .quick-btn-text {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .quick-btn-desc {
-            font-size: 0.9rem;
-            color: var(--gray);
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ========== 工作时间提示 ========== */
-        .work-hours-banner {
-            background: linear-gradient(135deg, #e9ecef, #f8f9fa);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-top: 3rem;
-            text-align: center;
-            border: 2px dashed var(--primary);
-        }
-
-        .work-hours-banner h3 {
-            color: var(--primary);
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .work-hours-banner p {
-            color: var(--gray);
-            line-height: 1.8;
-        }
-
-        /* ========== 响应式优化 ========== */
-        @media (max-width: 1024px) {
-            .contact-main-layout {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .map-container {
-                height: 400px;
-            }
-        }
-
+        /* ========== 响应式设计 ========== */
         @media (max-width: 768px) {
             .contact-hero {
                 padding: 3rem 0;
@@ -375,43 +275,55 @@
                 padding: 3rem 0;
             }
 
-            .map-container {
-                height: 350px;
+            .contact-us-section,
+            .prospective-section {
+                padding: 2rem;
+                margin-bottom: 3rem;
             }
 
-            .map-links {
-                grid-template-columns: 1fr;
+            .section-header {
+                flex-direction: column;
+                text-align: center;
             }
 
-            .contact-card {
-                padding: 1.5rem;
+            .section-title {
+                font-size: 1.6rem;
             }
 
-            .quick-contact-grid {
-                grid-template-columns: 1fr;
+            .contact-info-item {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .application-card {
+                padding: 2rem;
+            }
+
+            .card-title {
+                flex-direction: column;
+                text-align: center;
             }
         }
 
         @media (max-width: 480px) {
-            .contact-hero {
-                padding: 2rem 0;
-            }
-
-            .map-container {
-                height: 300px;
-            }
-
-            .map-header {
+            .contact-us-section,
+            .prospective-section {
                 padding: 1.5rem;
             }
 
-            .map-footer {
-                padding: 1.5rem;
+            .section-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
             }
 
-            .contact-card-header {
-                flex-direction: column;
-                text-align: center;
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .card-title {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -422,10 +334,10 @@
         <div class="container nav-container">
             <div class="logo">I²Group</div>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" class="nav-link">首页</a></li>
-                <li><a href="teams.html" class="nav-link">研究队伍</a></li>
-                <li><a href="publications.html" class="nav-link">论文发表</a></li>
-                <li><a href="contact.html" class="nav-link active">联系我们</a></li>
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="teams.html" class="nav-link">Team</a></li>
+                <li><a href="publications.html" class="nav-link">Publications</a></li>
+                <li><a href="contact.html" class="nav-link active">Contact</a></li>
             </ul>
             <button class="nav-toggle" id="navToggle">
                 <span></span>
@@ -449,135 +361,74 @@
     <!-- 联系信息主体 -->
     <section class="section contact-container">
         <div class="container">
-            <!-- 主布局：地图 + 联系信息 -->
-            <div class="contact-main-layout">
-                <!-- 左侧：地图区域 -->
-                <div class="map-section">
-                    <div class="map-header">
-                        <h2>🗺️ 实验室位置</h2>
-                        <p class="map-subtitle">北京市海淀区中关村东路95号 智能化大厦15层</p>
-                    </div>
-
-                    <div class="map-container">
-                        <!-- Google地图嵌入 -->
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3058.2684742834376!2d116.32644831561658!3d39.98857297941625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35f052e6b9c1d9ab%3A0x5e5b6c5f5a5b5c5f!2z5Lit5Zu96Zqb5pma5YyW5aSn5Y6mMTXlsYI!5e0!3m2!1szh-CN!2scn!4v1638888888888!5m2!1szh-CN!2scn"
-                            width="100%" 
-                            height="450"
-                            style="border:0;" 
-                            allowfullscreen="" 
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
-                    </div>
-
-                    <div class="map-footer">
-                        <p class="map-address">
-                            📍 <strong>详细地址：</strong>北京市海淀区中关村东路95号智能化大厦15层11111<br>
-                            🚇 <strong>地铁线路：</strong>4号线/10号线海淀黄庄站，D口出站步行约10分钟<br>
-                            🅿️ <strong>停车信息：</strong>大厦地下停车场（访客车位需提前预约）
-                        </p>
-                        <div class="map-links">
-                            <a href="https://www.google.com/maps/place/中国科学院自动化研究所" 
-                               target="_blank" 
-                               class="map-link">
-                                🌐 Google地图导航
-                            </a>
-                            <a href="https://map.baidu.com/search/中关村东路95号" 
-                               target="_blank" 
-                               class="map-link">
-                                🗺️ 百度地图导航
-                            </a>
-                        </div>
-                    </div>
+            <!-- Contact Us 板块 -->
+            <div class="contact-us-section">
+                <div class="section-header">
+                    <div class="section-icon">✉️</div>
+                    <h2 class="section-title">Contact Us</h2>
                 </div>
-
-                <!-- 右侧：联系信息卡片 -->
-                <div class="contact-info-section">
-                    <!-- 组织信息 -->
-                    <div class="contact-card">
-                        <div class="contact-card-header">
-                            <div class="contact-card-icon">🏛️</div>
-                            <div class="contact-card-title">组织信息</div>
-                        </div>
-                        <div class="contact-card-content">
-                            <strong>中文名称：</strong>智能成像研究组<br>
-                            <strong>英文名称：</strong>Intelligent Imaging Research Group (I²Group)<br>
-                            <strong>所属单位：</strong>中国科学院自动化研究所<br>
-                            <strong>实验室：</strong>多模态人工智能系统全国重点实验室
+                
+                <div class="contact-info-grid">
+                    <div class="contact-info-item">
+                        <div class="info-icon">📧</div>
+                        <div class="info-content">
+                            <div class="info-label">Email</div>
+                            <div class="info-value">
+                                <a href="mailto:Jun_wang@ia.ac.cn">Jun_wang@ia.ac.cn</a>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- 联系方式 -->
-                    <div class="contact-card">
-                        <div class="contact-card-header">
-                            <div class="contact-card-icon">✉️</div>
-                            <div class="contact-card-title">联系方式</div>
-                        </div>
-                        <div class="contact-card-content">
-                            <strong>📧 电子邮箱：</strong><br>
-                            <a href="mailto:liuhaowei2019@nlpr.ia.cn">liuhaowei2019@nlpr.ia.cn</a><br><br>
-                            <strong>📮 邮政编码：</strong>100190<br>
-                            <strong>📍 通讯地址：</strong><br>
-                            北京市海淀区中关村东路95号<br>
-                            智能化大厦15层11111室
+                    <div class="contact-info-item">
+                        <div class="info-icon">📍</div>
+                        <div class="info-content">
+                            <div class="info-label">Address</div>
+                            <div class="info-value">
+                                北京市海淀区中关村东路95号智能化大厦
+                            </div>
                         </div>
                     </div>
 
-                    <!-- 访问须知 -->
-                    <div class="contact-card">
-                        <div class="contact-card-header">
-                            <div class="contact-card-icon">📋</div>
-                            <div class="contact-card-title">访问须知</div>
-                        </div>
-                        <div class="contact-card-content">
-                            <strong>🔐 访客登记：</strong>请提前邮件预约<br>
-                            <strong>🕒 接待时间：</strong>工作日 9:00-17:00<br>
-                            <strong>📱 联系方式：</strong>请通过邮件联系<br>
-                            <strong>💼 商务合作：</strong>欢迎企业洽谈合作
+                    <div class="contact-info-item">
+                        <div class="info-icon">📮</div>
+                        <div class="info-content">
+                            <div class="info-label">Postal Code</div>
+                            <div class="info-value">100190</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 快速联系入口 -->
-            <div class="quick-contact-section">
-                <h2 class="quick-contact-title">快速联系方式</h2>
-                <div class="quick-contact-grid">
-                    <a href="mailto:liuhaowei2019@nlpr.ia.cn" class="quick-btn">
-                        <div class="quick-btn-icon">✉️</div>
-                        <div class="quick-btn-text">发送邮件</div>
-                        <div class="quick-btn-desc">联系我们讨论学术合作</div>
-                    </a>
-
-                    <a href="https://www.ia.cas.cn" target="_blank" class="quick-btn">
-                        <div class="quick-btn-icon">🏛️</div>
-                        <div class="quick-btn-text">研究所官网</div>
-                        <div class="quick-btn-desc">了解更多单位信息</div>
-                    </a>
-
-                    <a href="publications.html" class="quick-btn">
-                        <div class="quick-btn-icon">📚</div>
-                        <div class="quick-btn-text">学术成果</div>
-                        <div class="quick-btn-desc">查看最新论文发表</div>
-                    </a>
-
-                    <a href="teams.html" class="quick-btn">
-                        <div class="quick-btn-icon">👥</div>
-                        <div class="quick-btn-text">研究团队</div>
-                        <div class="quick-btn-desc">认识我们的成员</div>
-                    </a>
+            <!-- Prospective Students 板块 -->
+            <div class="prospective-section">
+                <div class="section-header">
+                    <div class="section-icon">🎓</div>
+                    <h2 class="section-title">Prospective Students</h2>
                 </div>
-            </div>
 
-            <!-- 工作时间提示 -->
-            <div class="work-hours-banner">
-                <h3>⏰ 工作时间</h3>
-                <p>
-                    我们的办公时间为：<strong>周一至周五 9:00-17:00</strong><br>
-                    如需访问实验室，请提前通过邮件预约，我们会尽快回复您<br>
-                    节假日及周末暂不接待访客，敬请谅解
-                </p>
+                <div class="application-cards">
+                    <!-- 科研实习申请 -->
+                    <div class="application-card">
+                        <h3 class="card-title">
+                            <span class="card-number">1</span>
+                            科研实习申请
+                        </h3>
+                        <div class="card-content">
+                            欢迎对本课题组研究方向感兴趣、并希望参与科研实践的同学申请实习岗位。请将您的个人简历和成绩单发送至邮箱<span class="email-highlight">Jun_wang@ia.ac.cn</span>，邮件主题注明：<strong>"实习生-学校-姓名"</strong>。我们收到邮件后会尽快与您联系。
+                        </div>
+                    </div>
+
+                    <!-- 研究生招生 -->
+                    <div class="application-card">
+                        <h3 class="card-title">
+                            <span class="card-number">2</span>
+                            研究生招生
+                        </h3>
+                        <div class="card-content">
+                            本课题组每年均招收博士与硕士研究生（包括推免生与统考生）。欢迎有意攻读学位的同学将个人简历与成绩单发送至邮箱<span class="email-highlight">Jun_wang@ia.ac.cn</span>，邮件主题注明：<strong>"研究生申请-学校-姓名"</strong>。
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
