@@ -7,324 +7,452 @@
     <title>联系我们 - I²Group</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* ========== 联系我们页面全新样式 ========== */
-        .contact-hero {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .contact-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,144C960,149,1056,139,1152,128C1248,117,1344,107,1392,101.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') bottom/cover no-repeat;
-        }
-
-        .contact-hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .contact-hero h1 {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            margin-bottom: 1rem;
-            font-weight: 800;
-        }
-
-        .contact-hero-subtitle {
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            opacity: 0.95;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .contact-container {
-            padding: 5rem 0;
-            background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
-        }
-
-        /* ========== Contact Us 板块 ========== */
-        .contact-us-section {
-            max-width: 900px;
-            margin: 0 auto 4rem;
-            background: white;
-            border-radius: 24px;
-            padding: 3rem;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-            border-left: 6px solid var(--primary);
-            transition: var(--transition);
-        }
-
-        .contact-us-section:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 2.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 3px solid #f0f0f0;
-        }
-
-        .section-icon {
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border-radius: 16px;
-            font-size: 2rem;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
-        }
-
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--dark);
+        /* ========== 黑白学术风格核心变量 ========== */
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .contact-info-grid {
-            display: grid;
+        :root {
+            --primary: #1a1a1a;
+            --secondary: #333333;
+            --dark: #000000;
+            --gray: #666666;
+            --light-gray: #f5f5f5;
+            --border: #e0e0e0;
+            --white: #ffffff;
+            --accent: #2c2c2c;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ========== 导航栏 ========== */
+        .navbar {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            color: var(--dark);
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
             gap: 2rem;
         }
 
-        .contact-info-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1.5rem;
-            padding: 1.5rem;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border-radius: 16px;
+        .nav-link {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--dark);
+            border-bottom-color: var(--dark);
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--dark);
             transition: var(--transition);
         }
 
-        .contact-info-item:hover {
-            background: linear-gradient(135deg, #e9ecef, #dee2e6);
-            transform: translateX(8px);
+        /* ========== 页面标题区 ========== */
+        .page-header {
+            background: var(--dark);
+            color: var(--white);
+            padding: 5rem 0 3rem;
+            text-align: center;
+            border-bottom: 3px solid var(--secondary);
         }
 
-        .info-icon {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            color: var(--primary);
-            border-radius: 12px;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
 
-        .info-content {
-            flex: 1;
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.85;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* ========== 主容器 ========== */
+        .contact-container {
+            padding: 5rem 0;
+            background: var(--light-gray);
+        }
+
+        /* ========== Contact Us 板块 ========== */
+        .contact-section {
+            max-width: 900px;
+            margin: 0 auto 4rem;
+            background: var(--white);
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .section-header {
+            background: var(--dark);
+            color: var(--white);
+            padding: 2rem 2.5rem;
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .section-body {
+            padding: 2.5rem;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .info-row {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
         }
 
         .info-label {
-            font-size: 0.9rem;
-            color: var(--gray);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+            width: 30%;
+            padding: 1.5rem 1rem;
+            font-weight: 700;
+            color: var(--dark);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            font-size: 0.95rem;
+            background: var(--light-gray);
+            border-right: 2px solid var(--border);
         }
 
         .info-value {
-            font-size: 1.1rem;
-            color: var(--dark);
-            font-weight: 600;
-            line-height: 1.6;
+            padding: 1.5rem 1rem;
+            color: var(--secondary);
+            font-size: 1rem;
+            line-height: 1.8;
         }
 
         .info-value a {
-            color: var(--primary);
+            color: var(--dark);
             text-decoration: none;
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
             transition: var(--transition);
         }
 
         .info-value a:hover {
-            color: var(--secondary);
-            text-decoration: underline;
+            border-bottom-color: var(--dark);
         }
 
         /* ========== Prospective Students 板块 ========== */
         .prospective-section {
             max-width: 900px;
             margin: 0 auto;
-            background: white;
-            border-radius: 24px;
-            padding: 3rem;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-            border-left: 6px solid var(--secondary);
-            transition: var(--transition);
+            background: var(--white);
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .prospective-section:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
-        }
-
-        .application-cards {
-            display: grid;
-            gap: 2rem;
-        }
-
-        .application-card {
-            background: linear-gradient(135deg, #f8f9fa, #ffffff);
-            border-radius: 20px;
+        .application-content {
             padding: 2.5rem;
-            border: 2px solid #e9ecef;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
         }
 
-        .application-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 6px;
-            height: 100%;
-            background: linear-gradient(180deg, var(--primary), var(--secondary));
-            transform: scaleY(0);
-            transition: var(--transition);
+        .application-item {
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 2px solid var(--border);
         }
 
-        .application-card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
-            transform: translateX(8px);
+        .application-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
         }
 
-        .application-card:hover::before {
-            transform: scaleY(1);
+        .item-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--dark);
+            color: var(--white);
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
         }
 
-        .card-title {
+        .item-title {
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--dark);
             margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .card-number {
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 700;
-        }
-
-        .card-content {
-            color: var(--gray);
+        .item-description {
+            color: var(--secondary);
             line-height: 2;
             font-size: 1rem;
+            margin-bottom: 1.5rem;
         }
 
-        .card-content strong {
+        .application-details {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-left: 4px solid var(--dark);
+            margin-top: 1rem;
+        }
+
+        .detail-row {
+            display: flex;
+            margin-bottom: 1rem;
+            align-items: flex-start;
+        }
+
+        .detail-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+            font-weight: 700;
             color: var(--dark);
+            min-width: 100px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
         }
 
-        .email-highlight {
+        .detail-value {
+            color: var(--secondary);
+            flex: 1;
+        }
+
+        .email-link {
             display: inline-block;
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
-            padding: 0.3rem 0.8rem;
-            border-radius: 8px;
+            color: var(--dark);
             font-weight: 600;
-            color: var(--primary);
-            margin: 0.5rem 0;
+            text-decoration: none;
+            border-bottom: 2px solid var(--dark);
             transition: var(--transition);
         }
 
-        .email-highlight:hover {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            transform: translateX(5px);
+        .email-link:hover {
+            color: var(--secondary);
+            border-bottom-color: var(--secondary);
+        }
+
+        /* ========== 页脚 ========== */
+        .footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .footer-subtitle {
+            color: rgba(255,255,255,0.7);
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
         }
 
         /* ========== 响应式设计 ========== */
         @media (max-width: 768px) {
-            .contact-hero {
-                padding: 3rem 0;
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .page-header p {
+                font-size: 1rem;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 1rem;
+                border-bottom: 1px solid var(--border);
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-toggle {
+                display: flex;
             }
 
             .contact-container {
                 padding: 3rem 0;
             }
 
-            .contact-us-section,
+            .contact-section,
             .prospective-section {
-                padding: 2rem;
                 margin-bottom: 3rem;
             }
 
             .section-header {
-                flex-direction: column;
-                text-align: center;
+                padding: 1.5rem;
             }
 
             .section-title {
-                font-size: 1.6rem;
+                font-size: 1.5rem;
             }
 
-            .contact-info-item {
+            .section-body,
+            .application-content {
+                padding: 1.5rem;
+            }
+
+            .info-table {
+                display: block;
+            }
+
+            .info-row {
+                display: block;
+                margin-bottom: 1.5rem;
+            }
+
+            .info-row:last-child {
+                margin-bottom: 0;
+            }
+
+            .info-label,
+            .info-value {
+                display: block;
+                width: 100%;
+                border: none;
+            }
+
+            .info-label {
+                margin-bottom: 0.5rem;
+                padding: 1rem;
+            }
+
+            .info-value {
+                padding: 1rem;
+                background: var(--light-gray);
+            }
+
+            .detail-row {
                 flex-direction: column;
-                align-items: center;
-                text-align: center;
             }
 
-            .application-card {
-                padding: 2rem;
-            }
-
-            .card-title {
-                flex-direction: column;
-                text-align: center;
+            .detail-label {
+                margin-bottom: 0.5rem;
             }
         }
 
         @media (max-width: 480px) {
-            .contact-us-section,
-            .prospective-section {
-                padding: 1.5rem;
+            .page-header h1 {
+                font-size: 2rem;
             }
 
-            .section-icon {
-                width: 50px;
-                height: 50px;
-                font-size: 1.5rem;
+            .section-header {
+                padding: 1rem;
             }
 
             .section-title {
-                font-size: 1.4rem;
+                font-size: 1.3rem;
             }
 
-            .card-title {
+            .section-body,
+            .application-content {
+                padding: 1rem;
+            }
+
+            .item-title {
                 font-size: 1.2rem;
             }
+
+            .application-details {
+                padding: 1rem;
+            }
+        }
+
+        /* ========== 滚动条样式 ========== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-gray);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--dark);
         }
     </style>
 </head>
@@ -348,84 +476,96 @@
     </nav>
 
     <!-- 页面标题 -->
-    <section class="contact-hero">
-        <div class="container contact-hero-content">
-            <h1>📞 联系我们</h1>
-            <p class="contact-hero-subtitle">
-                欢迎与智能成像研究小组取得联系<br>
-                期待与您在学术研究、技术交流、人才培养等方面展开合作
-            </p>
+    <header class="page-header">
+        <div class="container">
+            <h1>Contact Us</h1>
+            <p>欢迎与智能成像研究小组取得联系</p>
         </div>
-    </section>
+    </header>
 
     <!-- 联系信息主体 -->
-    <section class="section contact-container">
+    <section class="contact-container">
         <div class="container">
-            <!-- Contact Us 板块 -->
-            <div class="contact-us-section">
+            <!-- Contact Information 板块 -->
+            <div class="contact-section">
                 <div class="section-header">
-                    <div class="section-icon">✉️</div>
-                    <h2 class="section-title">Contact Us</h2>
+                    <h2 class="section-title">Contact Information</h2>
                 </div>
-                
-                <div class="contact-info-grid">
-                    <div class="contact-info-item">
-                        <div class="info-icon">📧</div>
-                        <div class="info-content">
-                            <div class="info-label">Email</div>
-                            <div class="info-value">
+                <div class="section-body">
+                    <table class="info-table">
+                        <tr class="info-row">
+                            <td class="info-label">Email</td>
+                            <td class="info-value">
                                 <a href="mailto:Jun_wang@ia.ac.cn">Jun_wang@ia.ac.cn</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="contact-info-item">
-                        <div class="info-icon">📍</div>
-                        <div class="info-content">
-                            <div class="info-label">Address</div>
-                            <div class="info-value">
+                            </td>
+                        </tr>
+                        <tr class="info-row">
+                            <td class="info-label">Address</td>
+                            <td class="info-value">
                                 北京市海淀区中关村东路95号智能化大厦
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="contact-info-item">
-                        <div class="info-icon">📮</div>
-                        <div class="info-content">
-                            <div class="info-label">Postal Code</div>
-                            <div class="info-value">100190</div>
-                        </div>
-                    </div>
+                            </td>
+                        </tr>
+                        <tr class="info-row">
+                            <td class="info-label">Postal Code</td>
+                            <td class="info-value">100190</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
 
             <!-- Prospective Students 板块 -->
             <div class="prospective-section">
                 <div class="section-header">
-                    <div class="section-icon">🎓</div>
                     <h2 class="section-title">Prospective Students</h2>
                 </div>
-
-                <div class="application-cards">
+                <div class="application-content">
                     <!-- 科研实习申请 -->
-                    <div class="application-card">
-                        <h3 class="card-title">
-                            <span class="card-number">1</span>
-                            科研实习申请
-                        </h3>
-                        <div class="card-content">
-                            欢迎对本课题组研究方向感兴趣、并希望参与科研实践的同学申请实习岗位。请将您的个人简历和成绩单发送至邮箱<span class="email-highlight">Jun_wang@ia.ac.cn</span>，邮件主题注明：<strong>"实习生-学校-姓名"</strong>。我们收到邮件后会尽快与您联系。
+                    <div class="application-item">
+                        <div class="item-number">01</div>
+                        <h3 class="item-title">Research Internship</h3>
+                        <p class="item-description">
+                            本课题组欢迎对智能成像、计算机视觉、深度学习等研究方向感兴趣的同学申请科研实习岗位。申请者应具备扎实的数学基础和编程能力，对学术研究有浓厚兴趣。
+                        </p>
+                        <div class="application-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Contact:</span>
+                                <span class="detail-value">
+                                    <a href="mailto:Jun_wang@ia.ac.cn" class="email-link">Jun_wang@ia.ac.cn</a>
+                                </span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Subject:</span>
+                                <span class="detail-value">实习生申请-学校-姓名</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Materials:</span>
+                                <span class="detail-value">个人简历、成绩单、研究兴趣说明</span>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 研究生招生 -->
-                    <div class="application-card">
-                        <h3 class="card-title">
-                            <span class="card-number">2</span>
-                            研究生招生
-                        </h3>
-                        <div class="card-content">
-                            本课题组每年均招收博士与硕士研究生（包括推免生与统考生）。欢迎有意攻读学位的同学将个人简历与成绩单发送至邮箱<span class="email-highlight">Jun_wang@ia.ac.cn</span>，邮件主题注明：<strong>"研究生申请-学校-姓名"</strong>。
+                    <div class="application-item">
+                        <div class="item-number">02</div>
+                        <h3 class="item-title">Graduate Programs</h3>
+                        <p class="item-description">
+                            本课题组每年招收博士与硕士研究生（含推免生与统考生）。我们期待具有良好学术背景、研究潜力和创新精神的优秀学生加入。研究生将在导师指导下开展前沿科研工作，发表高水平学术论文。
+                        </p>
+                        <div class="application-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Contact:</span>
+                                <span class="detail-value">
+                                    <a href="mailto:Jun_wang@ia.ac.cn" class="email-link">Jun_wang@ia.ac.cn</a>
+                                </span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Subject:</span>
+                                <span class="detail-value">研究生申请-学校-姓名</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Materials:</span>
+                                <span class="detail-value">个人简历、成绩单、研究计划、推荐信（如有）</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -442,5 +582,27 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script>
+        // ========== 导航栏菜单切换 ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+
+            if (navToggle) {
+                navToggle.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                });
+            }
+
+            // 点击页面其他地方关闭菜单
+            document.addEventListener('click', function(event) {
+                if (navMenu && navToggle) {
+                    if (!navMenu.contains(event.target) && !navToggle.contains(event.target)) {
+                        navMenu.classList.remove('active');
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
